@@ -26,20 +26,42 @@ print(f"Your password is: {password}\n\n")
 
 #Hard Level - Order of characters randomized:
 #e.g. 4 letter, 2 symbol, 2 number = g^2jk8&P
-strong_password = password[:]
+# strong_password = password[:]
 
-def fisher_yates_shuffle(sequence):
-    """Fisher-Yates shuffle algorithm."""
-    for i in range(len(sequence) - 1, 0, -1):
-        j = random.randint(0, i)
-        sequence[i], sequence[j] = sequence[j], sequence[i]
-    return sequence
+# def fisher_yates_shuffle(sequence):
+#     """Fisher-Yates shuffle algorithm."""
+#     for i in range(len(sequence) - 1, 0, -1):
+#         j = random.randint(0, i)
+#         sequence[i], sequence[j] = sequence[j], sequence[i]
+#     return sequence
 
-# Assuming strong_password is a list of characters
-shuffled_password = fisher_yates_shuffle(list(strong_password))
+# # Assuming strong_password is a list of characters
+# shuffled_password = fisher_yates_shuffle(list(strong_password))
 
-# Convert the list back to a string
-strong_password = ''.join(shuffled_password)
+# # Convert the list back to a string
+# strong_password = ''.join(shuffled_password)
 
-print(f"Your strong password is: {strong_password}")
+# print(f"Your strong password is: {strong_password}")
 
+# Course Solution:
+
+password_list = []
+
+for char in range(1, num_letters + 1):
+  password_list.append(random.choice(letters))
+
+for char in range(1, num_symbols + 1):
+  password_list += random.choice(symbols)
+
+for char in range(1, num_numbers + 1):
+  password_list += random.choice(numbers)
+
+print(password_list)
+random.shuffle(password_list)
+print(password_list)
+
+password = ""
+for char in password_list:
+  password += char
+  
+print(f"Your password is: {password}")
