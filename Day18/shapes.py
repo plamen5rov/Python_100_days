@@ -2,6 +2,8 @@ import turtle as t
 import random
 
 tim = t.Turtle()
+tim.pensize(8)
+tim.speed(0)
 
 ########### Challenge 3 - Draw Shapes ########
 
@@ -13,6 +15,6 @@ def draw_shape(num_sides):
         tim.forward(100)
         tim.right(angle)
 
-for shape_side_n in range(3, 10):
+for shape_side_n in range(3, 100):
     tim.color(random.choice(colors))
     draw_shape(shape_side_n)
