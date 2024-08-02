@@ -14,5 +14,5 @@ for _ in range(200):
     tim.forward(30)
     tim.setheading(random.choice(directions))
 
-t.screen = Screen()
-t.screen.exitonclick()
+screen = t.Screen()
+screen.exitonclick()
