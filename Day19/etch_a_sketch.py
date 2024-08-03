@@ -1,3 +1,4 @@
+"""Etch-A-Sketch App"""
 from turtle import Turtle, Screen
 
 tim = Turtle()
