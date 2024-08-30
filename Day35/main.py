@@ -1,9 +1,10 @@
 from twilio.rest import Client
 import requests
+import os
 
 #Params
 
-API_KEY = "aa7f86b0e29a5e3a06a003fab53a4bcd"
+API_KEY = os.environ.get("API_KEY")
 LATITUDE = 42.697708
 LONGITUDE = 23.321867
 weather_params = {
@@ -13,8 +14,8 @@ weather_params = {
     "cnt":4,
 }
 
-account_sid = 'ACa2fcd2a09692aff1ccb9f86214c83171'
-auth_token = 'fcd4e7085259d82abb95322f06f07c7d'
+account_sid = os.environ.get("SID")
+auth_token = os.environ.get("TWILIO_TOKEN")
 
 response = requests.get(url="https://api.openweathermap.org/data/2.5/forecast", 
                         params=weather_params,
@@ -30,7 +31,8 @@ for n in range(0,4):
         from_='+12625585117',
         body='Bring an umbrella!',
         to='+359888849888')
-        print(message.status)
+        print(message.status
+              )
     else:
         print("You don't need an umbrella!")
 
