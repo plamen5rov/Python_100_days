@@ -30,7 +30,7 @@ for n in range(0,4):
         from_='+12625585117',
         body='Bring an umbrella!',
         to='+359888849888')
-        print(message.sid)
+        print(message.status)
     else:
         print("You don't need an umbrella!")
 
