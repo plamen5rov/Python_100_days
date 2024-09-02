@@ -29,9 +29,25 @@ graph_params = {
 
 headers = {"X-USER-TOKEN":TOKEN}
 
-response = requests.post(url=graph_endpoint, 
-                         json=graph_params, 
+# response = requests.post(url=graph_endpoint, 
+#                          json=graph_params, 
+#                          headers=headers, 
+#                          timeout=10)
+
+
+#Add a Pixel to the Graph
+
+pixel_endpoint = f"{graph_endpoint}/graph001"
+
+pixel_params = {
+    "date":"20240902",
+    "quantity":"2"
+}
+
+response = requests.post(url=pixel_endpoint, 
+                         json=pixel_params, 
                          headers=headers, 
                          timeout=10)
+
 
 print(response.text)
