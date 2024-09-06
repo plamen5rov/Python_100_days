@@ -45,8 +45,6 @@ class DataManager:
             )
             print(response.text)
 
-            
-            
     def get_customer_emails(self):
         response = requests.get(url=self.users_endpoint)
         data = response.json()
