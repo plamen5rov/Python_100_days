@@ -17,4 +17,6 @@ driver.get("https://en.wikipedia.org/wiki/Main_Page")
 
 articles_number = driver.find_element(by=By.XPATH, value='//*[@id="articlecount"]/a[1]')
 
-print(articles_number.text)
+articles_number.click()
+
+# print(articles_number.text)
