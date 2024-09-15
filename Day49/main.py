@@ -3,10 +3,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 
-ACCOUNT_EMAIL = "YOUR_EMAIL_HERE"
-ACCOUNT_PASSWORD = 'YOUR_PW_HERE'
+ACCOUNT_EMAIL = YOUR LOGIN EMAIL
+ACCOUNT_PASSWORD = YOUR LOGIN PASSWORD
+PHONE = YOUR PHONE NUMBER
 
-# Optional - Keep the browser open (helps diagnose issues if the script crashes)
+# Optional - Keep the browser open if the script crashes.
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach", True)
 
@@ -39,3 +40,18 @@ password_field.send_keys(Keys.ENTER)
 
 # You may be presented with a CAPTCHA - Solve the Puzzle Manually
 input("Press Enter when you have solved the Captcha")
+
+#Locate the apply button
+time.sleep(5)
+apply_button = driver.find_element(by=By.CSS_SELECTOR, value=".jobs-s-apply button")
+apply_button.click()
+
+#If application requires phone number and the field is empty, then fill in the number.
+time.sleep(5)
+phone = driver.find_element(by=By.CSS_SELECTOR, value="input[id*=phoneNumber]")
+if phone.text == "":
+    phone.send_keys(PHONE)
+
+#Submit the application
+submit_button = driver.find_element(by=By.CSS_SELECTOR, value="footer button")
+submit_button.click()
