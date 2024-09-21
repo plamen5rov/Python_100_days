@@ -44,7 +44,7 @@ class InstaFollower:
         username.send_keys(USERNAME)
         password.send_keys(PASSWORD)
 
-        time.sleep(2.1)
+        time.sleep(5.1)
         password.send_keys(Keys.ENTER)
 
         time.sleep(4.3)
