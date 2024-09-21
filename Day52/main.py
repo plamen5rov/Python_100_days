@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import ElementClickInterceptedException
 import time
 
 # Load the .env file
@@ -16,17 +17,15 @@ PASSWORD = os.getenv('PASSWORD')
 # print(f"Similar Account: {SIMILAR_ACCOUNT}")
 # print(f"Username: {USERNAME}")
 # print(f"Password: {PASSWORD}")
-
-
-
 class InstaFollower:
 
     def __init__(self):
-        # Optional - Keep browser open (helps diagnose issues during a crash)
+        # Keep browser open so you can manually log out
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("detach", True)
         self.driver = webdriver.Chrome(options=chrome_options)
 
+    # Avoid bot-like behaviour and try not to run your script too often.
     def login(self):
         url = "https://www.instagram.com/accounts/login/"
         self.driver.get(url)
@@ -56,20 +55,20 @@ class InstaFollower:
 
         time.sleep(3.7)
         # Click "not now" on notifications prompt
-        notifications_prompt = self.driver.find_element(by=By.XPATH, value="// button[contains(text(), 'Not Now')]")
+        notifications_prompt = self.driver.find_element(by=By.XPATH, value="//button[contains(text(), 'Not Now')]")
         if notifications_prompt:
             notifications_prompt.click()
 
     def find_followers(self):
         time.sleep(5)
-        # Show followers of the selected account. 
+        # Will bring up the followers of an account
         self.driver.get(f"https://www.instagram.com/{SIMILAR_ACCOUNT}/followers")
 
-        time.sleep(5.2)
-        # The xpath of the modal that shows the followers will change over time. Update yours accordingly.
+        time.sleep(8.2)
+        # The xpath of the modal will change over time. Update yours accordingly.
         modal_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[2]"
         modal = self.driver.find_element(by=By.XPATH, value=modal_xpath)
-        for i in range(10):
+        for i in range(5):
             # In this case we're executing some Javascript, that's what the execute_script() method does.
             # The method can accept the script as well as an HTML element.
             # The modal in this case, becomes the arguments[0] in the script.
@@ -78,11 +77,20 @@ class InstaFollower:
             time.sleep(2)
 
     def follow(self):
-        pass
+        # Check and update the (CSS) Selector for the "Follow" buttons as required.
+        all_buttons = self.driver.find_elements(By.CSS_SELECTOR, value='._aano button')
+
+        for button in all_buttons:
+            try:
+                button.click()
+                time.sleep(1.1)
+            # Clicking button for someone who is already being followed will trigger dialog to Unfollow/Cancel
+            except ElementClickInterceptedException:
+                cancel_button = self.driver.find_element(by=By.XPATH, value="//button[contains(text(), 'Cancel')]")
+                cancel_button.click()
 
 
 bot = InstaFollower()
 bot.login()
 bot.find_followers()
 bot.follow()
-
