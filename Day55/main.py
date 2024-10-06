@@ -2,6 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
+#Decorators to add a tag around text on web page.
 def make_bold(function):
     def wrapper():
         return "<b>" + function() + "</b>"
@@ -18,22 +19,28 @@ def make_underlined(function):
     return wrapper
 
 @app.route('/')
+def hello_world():
+    #Rendering HTML Elements
+    return '<h1 style="text-align: center">Hello, World!</h1>' \
+           '<p>This is a paragraph.</p>' \
+           '<img src="https://media.giphy.com/media/hvS1eKlR75hMr0l7VJ/giphy.gif" width=200>'
+
+
+#Different routes using the app.route decorator
+@app.route("/bye")
 @make_bold
 @make_emphasis
 @make_underlined
-def hello_world():
-    return '<h2 style="color: green">Hello, World!</h2>'
-        
+def bye():
+    return "Bye!"
 
 
-@app.route("/bye")
-def say_bye():
-    return '<img src="https://media.giphy.com/media/BcuDuUQgeSQco/giphy.gif?cid=ecf05e47snr8ispqi7im5g1akuqwa2pov6pzx221fiemez52&ep=v1_gifs_related&rid=giphy.gif&ct=g">'
-
-@app.route("/<username>")
-def greet(username):
-    return f"Hallo,{username}"
+#Creating variable paths and converting the path to a specified data type
+@app.route("/username/<name>/<int:number>")
+def greet(name, number):
+    return f"Hello there {name}, you are {number} years old!"
 
 
 if __name__ == "__main__":
+    #Run the app in debug mode to auto-reload
     app.run(debug=True)
